@@ -1,0 +1,17 @@
+- name: BigData Developer Keywords
+  keywords:
+      - Java, Scala, Python
+      - Spark, Kafka, ElasticSearch, Redis
+
+- name: Machine Learning Engineer Keywords
+  keywords:
+      - Regression, LR, SVR, NN
+      - Cluster, KNN
+      - GBDT, RF
+      - LDA
+- name:  Recommend System Engineer Keywords
+  keywords:
+      - Python
+      - LR, SVD
+      - FM, FFM
+      - DeepNets
