@@ -125,4 +125,4 @@ simple_jekyll_search:
 #    Analytics     #
 # ---------------- #
 google:
-    analytics_id:
+    analytics_id: UA-135621519-1
