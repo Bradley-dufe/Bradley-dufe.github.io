@@ -28,7 +28,7 @@ email: niningxiaoshi@163.com
 navs:
   -
     href: /
-    label: 首页
+    label: 首页f
 
   -
     href: /categories/
@@ -84,7 +84,7 @@ collections:
         output: true
         permalink: /wiki/:path/
 
-repository: Bradley-dufe/bradley.github.io
+repository: Bradley-dufe/Bradley-dufe.github.io
 
 # ---------------- #
 #      Comments    #
