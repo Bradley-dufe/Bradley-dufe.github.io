@@ -84,10 +84,10 @@
     <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
     </script>
 
-    <script type="text/javascript">
-        var host = "yoursite.com";
-        if ((host == window.location.host) && (window.location.protocol != "https:"))
-            window.location.protocol = "https";
+    <script>
+        // 判断非本机且未使用 https 时，强制重定向到 https。
+        if ((!window.location.host.startsWith("localhost")) && (window.location.protocol != "https:"))
+            window.location = window.location.toString().replace(/^http:/, "https:");
     </script>
 
     <script>
