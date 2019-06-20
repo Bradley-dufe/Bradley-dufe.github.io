@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>LeetCode At Hand (4-sum) | 闪光的沙粒</title>
+<meta name="description" content="温故而知新">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://Bradley-dufe.github.io/favicon.ico?v=1561050285855">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://Bradley-dufe.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://Bradley-dufe.github.io">
+        <img src="https://Bradley-dufe.github.io/images/avatar.png?v=1561050285855" class="site-logo">
+        <h1 class="site-title">闪光的沙粒</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://Bradley-dufe.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">LeetCode At Hand (4-sum)</h2>
+            <div class="post-date">2019-03-11</div>
+            
+              <div class="feature-container" style="background-image: url('https://Bradley-dufe.github.io/post-images/2019-03-11-LeetCodeAtHand-4sum.jpg')">
+              </div>
+            
+            <div class="post-content">
+              <h2 id="1问题描述">1.问题描述</h2>
+<p>Given an array <code>nums</code> of <em>n</em> integers and an integer <code>target</code>, are there elements <em>a</em>, <em>b</em>, <em>c</em>, and <em>d</em> in <code>nums</code> such that <em>a</em> + <em>b</em> + <em>c</em> + <em>d</em> = <code>target</code>? Find all unique quadruplets in the array which gives the sum of <code>target</code>.</p>
+<p><strong>Note:</strong></p>
+<p>The solution set must not contain duplicate quadruplets.</p>
+<p><strong>Example:</strong></p>
+<pre><code>Given array nums = [1, 0, -1, 0, -2, 2], and target = 0.
+
+A solution set is:
+[
+  [-1,  0, 0, 1],
+  [-2, -1, 1, 2],
+  [-2,  0, 0, 2]
+]
+</code></pre>
+<h2 id="2解题思路">2.解题思路</h2>
+<h4 id="21-快速归类">2.1 快速归类：</h4>
+<ul>
+<li>数据结构：考察对数组知识的掌握程度；数组结构的相关问题主要考察如何高效遍历数组，需要重点关注任务的初始化条件和边界条件。</li>
+<li>任务类型：属于&quot;遍历搜索类型”；</li>
+</ul>
+<h4 id="22-问题抽象重建">2.2 问题抽象重建：</h4>
+<ul>
+<li>该题可以抽象理解为:提供一种算法，使得从给定整数集合中寻找任意四个元素的非重复子集，该子集的元素的和与目标的值<strong>相等</strong>。</li>
+<li>问题的关键点在于如何快速寻找符合要求的子集</li>
+</ul>
+<h4 id="23-思路">2.3 思路：</h4>
+<ul>
+<li>
+<p>暴力搜索：复杂度<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>n</mi><mn>4</mn></msup><mo stretchy="false">)</mo><mi mathvariant="normal">​</mi></mrow><annotation encoding="application/x-tex">O(n^4)​</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mord">​</span></span></span></span></p>
+</li>
+<li>
+<p>和3sum问题类似，在最外层多一个游标，顺序遍历数组,复杂度为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mo>∗</mo><msup><mi>n</mi><mn>2</mn></msup><mo stretchy="false">)</mo><mo>=</mo><mi>O</mi><mo stretchy="false">(</mo><msup><mi>n</mi><mn>3</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n*n^2) = O(n^3)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></p>
+</li>
+</ul>
+<h2 id="3解法">3.解法</h2>
+<h4 id="31-排序搜索">3.1 排序+搜索</h4>
+<pre><code class="language-java">class Solution{
+ public List&lt;List&lt;Integer&gt;&gt; fourSum(int[] nums, int target) {
+        Arrays.sort(nums);
+        List&lt;List&lt;Integer&gt;&gt; res = new ArrayList &lt;List &lt;Integer&gt;&gt;();
+        for(int i = 0;i&lt;nums.length-3;i++){
+            if(i == 0 ||(i&gt;0 &amp; nums[i-1]!=nums[i]))
+            for(int j = i+1;j&lt;nums.length-2;j++){
+                if(j == i+1 || (j&gt;i+1 &amp;&amp; nums[j-1]!=nums[j])) {
+                    int l = j + 1, r = nums.length - 1;
+                    while (l &lt; r) {
+                        int sum = nums[l]+nums[r]+nums[i]+nums[j];
+                        if(sum == target){
+                            res.add(Arrays.asList(nums[i],nums[j],nums[l],nums[r]));
+                            while (l &lt; r &amp;&amp; nums[l] == nums[l + 1]) l++;
+                            while (l &lt; r &amp;&amp; nums[r] == nums[r - 1]) r--;
+                            l++;r--;
+                        }else{
+                            if(sum &lt; target) l++;
+                            else r--;
+                        }
+                    }
+                }
+            }
+        }
+        return res;
+    }
+}
+</code></pre>
+<h4 id="32-暴力搜索">3.2 暴力搜索</h4>
+<p>略</p>
+<h3 id="3参考资料">3.参考资料</h3>
+<ul>
+<li>
+<p><a href="https://leetcode.com/problems/3sum/discuss/7380/Concise-O(N2)-Java-solution">3sum问题的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>n</mi><mn>2</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>时间复杂度解法</a></p>
+</li>
+<li>
+<p><a href="https://leetcode.com/problems/3sum-closest/">3Sum-closest问题LeetCode传送门</a></p>
+</li>
+</ul>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://Bradley-dufe.github.io/tag/JTjepfMbe" class="tag">
+                    LeetCode
+                  </a>
+                
+                  <a href="https://Bradley-dufe.github.io/tag/Vx4H-PFBd" class="tag">
+                    初级
+                  </a>
+                
+                  <a href="https://Bradley-dufe.github.io/tag/EvJESWrVb" class="tag">
+                    Java
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://Bradley-dufe.github.io/post/2019-03-11-LeetCodeAtHand-ksum">
+                  <h3 class="post-title">
+                    LeetCode At Hand (k-sum)
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'e5c24a09874cf61b51ff',
+        clientSecret: 'b277cd50d3a51aaa778d434f6243613b66d14020',
+        repo: 'blog-comments',
+        owner: 'Bradley-dufe',
+        admin: ['Bradley-dufe'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>
