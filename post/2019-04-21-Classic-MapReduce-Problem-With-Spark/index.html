@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>MapReduce经典问题和Spark实现 | 闪光的沙粒</title>
+<meta name="description" content="温故而知新">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://Bradley-dufe.github.io/favicon.ico?v=1566227795256">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://Bradley-dufe.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-135621519-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-135621519-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://Bradley-dufe.github.io">
+        <img src="https://Bradley-dufe.github.io/images/avatar.png?v=1566227795256" class="site-logo">
+        <h1 class="site-title">闪光的沙粒</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://Bradley-dufe.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">MapReduce经典问题和Spark实现</h2>
+            <div class="post-date">2019-04-21</div>
+            
+              <div class="feature-container" style="background-image: url('https://Bradley-dufe.github.io/post-images/2019-04-21-Classic-MapReduce-Problem-With-Spark.jpg')">
+              </div>
+            
+            <div class="post-content">
+              <h1 id="mapreduce经典问题和spark实现">MapReduce经典问题和Spark实现</h1>
+<p>MapReduce计算范式是当今的分布式计算算法实现的基础，也是算法工程师需要掌握的知识，同时“面试造火箭“的常见问题。本文梳理了MapReduce常见的算法场景,并通过Spark进行实现</p>
+<!-- more -->
+<pre><code class="language-scala">package org.shiningsand
+
+import org.apache.spark.SparkConf
+import org.apache.spark.internal.Logging
+import org.apache.spark.rdd.RDD
+import org.apache.spark.sql.SparkSession
+
+import scala.collection.mutable.ArrayBuffer
+import scala.util.Random
+
+
+/**
+  * @Author: YangLei
+  * @Description:
+  * @Date: Create in 11:18 AM 2019/4/24
+  * @update in 11:18 AM 2019/4/24
+  */
+object ClassicMRProblem extends Logging{
+  val ss = SparkSession.builder()
+    .appName(&quot;mr-implementation&quot;)
+    .master(&quot;local[*]&quot;)
+    .config(sparkConfig)
+    .getOrCreate()
+  ss.sparkContext.setLogLevel(&quot;error&quot;)
+  val sc = ss.sparkContext
+
+  def main(args: Array[String]): Unit = {
+    topN()
+  }
+  def MaxMin: Unit = {
+
+
+    //初始化测试数据(可以指定分区数）
+    val data = sc.parallelize(Array(10,17,3,4,5,6,7,8,1001,6,2,100,2000,30,40),2);
+    log.error(&quot;NumPartitions:: &quot;+data.getClass.toString+&quot; &quot;+data.getNumPartitions.toString)
+    val data2 = sc.parallelize(Array(10,17,3,4,5,6,7,8,1001,6,2,100,2000,30,40));
+    log.error(&quot;NumPartitions:: &quot;+data2.getClass.toString+&quot; &quot;+data2.getNumPartitions.toString)
+
+    /**
+      * 使用Reduce
+      * def reduce(f: (T, T) ⇒ T): T
+      * Reduces the elements of this RDD using the specified commutative and associative binary operator.
+      * reduce方法是RDD结构的高级算子,数据处理中使用频率很高
+      * 处理逻辑：
+      * each partition is processed sequentially element by element
+      * multiple partitions can be processed at the same time either by a single worker
+      * (multiple executor threads) or different workers
+      * partial results are fetched to the driver where the final reduction is applied
+      */
+
+    val max = data2.reduce((a,b) =&gt; Math.max(a,b))
+    val min = data2.reduce((a,b) =&gt; Math.min(a,b))
+    println(&quot;max : &quot; + max)
+    println(&quot;min : &quot; + min)
+
+
+    /**
+      * 使用ReduceByKey
+      * ReduceByKey属于PairRDD操作,对数据分区的把控能力更强
+      *
+      * def reduceByKey(partitioner: Partitioner, func: (V, V) =&gt; V): RDD[(K, V)] = self.withScope {
+      * combineByKeyWithClassTag[V]((v: V) =&gt; v, func, func, partitioner)
+      * }
+      *
+      * /**
+      * * Merge the values for each key using an associative and commutative reduce function. This will
+      * * also perform the merging locally on each mapper before sending results to a reducer, similarly
+      * * to a &quot;combiner&quot; in MapReduce. Output will be hash-partitioned with numPartitions partitions.
+      **/
+      * def reduceByKey(func: (V, V) =&gt; V, numPartitions: Int): RDD[(K, V)] = self.withScope {
+      * reduceByKey(new HashPartitioner(numPartitions), func)
+      * }
+      */
+
+    /**
+      * Spark分区默认hashPartitioner,还可以使用rangePartitioner和自定义partitioner
+      * https://blog.csdn.net/high2011/article/details/68491115
+      */
+    def putKey(iter: Iterator[Int]): Iterator[(String,Int)]= {
+      var res = List[(String,Int)]()
+      while (iter.hasNext) {
+        val cur = iter.next;
+        val new_value = ((cur%5+'a').toChar.toString,cur)
+        res = new_value :: res
+      }
+      res.iterator
+    }
+    val data3 = data2.mapPartitions(putKey)
+
+    data3.groupByKey().foreachPartition { p =&gt;
+      println(&quot;分区&quot;+p.toIterator.mkString)
+    }
+
+
+    val maxByKey = data3.reduceByKey((a,b) =&gt; Math.max(a,b)).map(r=&gt;(&quot;last&quot;,r._2))
+      .reduceByKey((a,b) =&gt; Math.max(a,b))
+    val minByKey = data3.reduceByKey((a,b) =&gt; Math.min(a,b)).map(r=&gt;(&quot;last&quot;,r._2))
+        .reduceByKey((a,b) =&gt; Math.min(a,b))
+
+    println()
+    println(&quot;maxByKey : &quot; + maxByKey.map(_._2).collect().mkString)
+    println(&quot;minByKey : &quot; + minByKey.map(_._2).collect().mkString)
+
+    /**
+      * /**
+      * * Aggregate the elements of each partition, and then the results for all the partitions, using
+      * * given combine functions and a neutral &quot;zero value&quot;. This function can return a different result
+      * * type, U, than the type of this RDD, T. Thus, we need one operation for merging a T into an U
+      * * and one operation for merging two U's, as in scala.TraversableOnce. Both of these functions are
+      * * allowed to modify and return their first argument instead of creating a new U to avoid memory
+      * * allocation.
+      * *
+      * * @param zeroValue the initial value for the accumulated result of each partition for the
+      * *                  `seqOp` operator, and also the initial value for the combine results from
+      * *                  different partitions for the `combOp` operator - this will typically be the
+      * *                  neutral element (e.g. `Nil` for list concatenation or `0` for summation)
+      * * @param seqOp an operator used to accumulate results within a partition
+      * * @param combOp an associative operator used to combine results from different partitions
+      **/
+      * def aggregate[U: ClassTag](zeroValue: U)(seqOp: (U, T) =&gt; U, combOp: (U, U) =&gt; U): U
+      *
+      * aggregate方法
+      *
+      */
+    val agrMax = data3.aggregate(Integer.MIN_VALUE)((maxValue,num) =&gt;Math.max(maxValue,num._2),
+      (maxV1,maxV2)=&gt; Math.max(maxV1,maxV2))
+    println(&quot;agrMax: &quot;+agrMax)
+
+    //aggregationByKey
+    val agrMaxByKey = data3.aggregateByKey(Integer.MIN_VALUE,4)((maxValue,num) =&gt;{Math.max(maxValue,num)},
+      (maxV1,maxV2)=&gt; Math.max(maxV1,maxV2)
+    )
+
+    agrMaxByKey.foreach(print(_))
+    println()
+
+    val agrMaxKey = agrMaxByKey.map(r=&gt;(&quot;last&quot;,r._2))
+      .reduceByKey((a,b) =&gt; Math.max(a,b)).map(_._2).collect().mkString
+
+    println(&quot;maxByKey : &quot; + agrMaxKey)
+
+    sc.stop
+  }
+
+
+
+  def deduplication(): Unit ={
+
+    /**
+      * ReduceByKey去重
+      */
+    val duplicateData = sc.parallelize(Array((&quot;2012-3-1&quot;,&quot;a&quot;),(&quot;2012-3-1&quot;,&quot;a&quot;),(&quot;2012-3-2&quot;,&quot;c&quot;),(&quot;2012-3-2&quot;,&quot;b&quot;),(&quot;2012-3-3&quot;,&quot;c&quot;)))
+
+    println(duplicateData.map(p =&gt;(p,1)).reduceByKey(_+_).keys.collect().mkString)
+
+    duplicateData.sortByKey()
+  }
+
+
+  def topN(): Unit ={
+    val data = sc.parallelize(Array(
+      (&quot;uuid_1&quot;,&quot;app_1&quot;,78),
+      (&quot;uuid_1&quot;,&quot;app_2&quot;,90),
+      (&quot;uuid_1&quot;,&quot;app_3&quot;,200),
+      (&quot;uuid_2&quot;,&quot;app_1&quot;,3),
+      (&quot;uuid_2&quot;,&quot;app_2&quot;,7),
+      (&quot;uuid_3&quot;,&quot;app_1&quot;,178),
+      (&quot;uuid_3&quot;,&quot;app_2&quot;,28),
+      (&quot;uuid_3&quot;,&quot;app_3&quot;,43),
+      (&quot;uuid_3&quot;,&quot;app_4&quot;,2),
+      (&quot;uuid_4&quot;,&quot;app_1&quot;,0),
+      (&quot;uuid_4&quot;,&quot;app_2&quot;,6),
+      (&quot;uuid_4&quot;,&quot;app_3&quot;,743),
+      (&quot;uuid_4&quot;,&quot;app_4&quot;,34)
+    )
+    )
+    val data1 = data.map(p=&gt;((Random.nextInt(3),p._1),(p._2,p._3))).groupByKey()
+    data1.foreach(p =&gt;println(p))
+    println(&quot;==============&quot;)
+//    val data2 = data1.flatMap({p=&gt;(p._1._2,p._2.toList.sortWith(_._2&gt;_._2).take(1))})
+//    data2.foreach(p =&gt;println(p))
+//    print(data2.collect().mkString)
+
+
+    val topNResult3 = data.map(p=&gt;(p._1,(p._2,p._3))).aggregateByKey(ArrayBuffer[(String,Int)]())(
+      (array, num) =&gt; {
+        array += num
+        array.sortWith(_._2&gt;_._2).takeRight(2)
+      },
+      (u1, u2) =&gt; {
+        //对任意的两个局部聚合值进行聚合操作，可以会发生在combiner阶段和shuffle之后的最终的数据聚合的阶段
+        u1 ++= u2
+        u1.sorted.takeRight(2)
+      }
+    ).map(p =&gt; (p._1, p._2.toList))
+
+    println(&quot;+---+---+ 使用aggregateByKey获取TopN的结果：&quot;)
+    topNResult3.foreach(println(_))
+
+  }
+
+  def sparkConfig: SparkConf = {
+    val conf = new SparkConf()
+    conf.set(&quot;spark.streaming.kafka.consumer.cache.enabled&quot;, &quot;false&quot;)
+    conf.set(&quot;spark.streaming.kafka.maxRatePerPartition&quot;, &quot;8000&quot;)
+    conf.set(&quot;hive.exec.dynamic.partition.mode&quot;, &quot;nonstrict&quot;)
+    conf.set(&quot;spark.streaming.backpressure.enabled&quot;, &quot;true&quot;)
+    conf.set(&quot;hive.exec.dynamic.partition&quot;, &quot;true&quot;)
+    conf.set(&quot;spark.scheduler.mode&quot;, &quot;FIFO&quot;)
+    conf.set(&quot;spark.streaming.concurrentJobs&quot;, &quot;100&quot;)
+    conf.set(&quot;spark.serializer&quot;, &quot;org.apache.spark.serializer.KryoSerializer&quot;)
+    conf.set(&quot;spark.debug.maxToStringField&quot;, &quot;1000&quot;)
+    conf.set(&quot;spark.rdd.compress&quot;, &quot;true&quot;)
+    conf.set(&quot;spark.streaming.kafka.consumer.cache.enabled&quot;, &quot;false&quot;)
+    conf.set(&quot;spark.storage.memoryFraction&quot;, &quot;0.3&quot;)
+  }
+}
+</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://Bradley-dufe.github.io/tag/6XdFTjK9Q" class="tag">
+                    大数据
+                  </a>
+                
+                  <a href="https://Bradley-dufe.github.io/tag/xUjMcJ0rp" class="tag">
+                    经验
+                  </a>
+                
+                  <a href="https://Bradley-dufe.github.io/tag/Jz-liOFl9" class="tag">
+                    工程技巧
+                  </a>
+                
+              </div>
+            
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'a7cdf6a4218738b4f423',
+        clientSecret: '04dfdd7b92da99e863c7e0396c204b47c3f13ebe',
+        repo: 'blog-comment',
+        owner: 'Bradley-dufe',
+        admin: ['Bradley-dufe'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>
