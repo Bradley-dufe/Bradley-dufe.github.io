@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Bradley-dufe.github.io</id>
     <title>闪光的沙粒</title>
-    <updated>2019-08-19T15:16:40.102Z</updated>
+    <updated>2019-08-19T15:28:04.532Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Bradley-dufe.github.io"/>
     <link rel="self" href="https://Bradley-dufe.github.io/atom.xml"/>
@@ -36,6 +36,19 @@
         <summary type="html"><![CDATA[<p>Mac OX 快捷键速查表</p>
 ]]></summary>
         <content type="html"><![CDATA[<p>Mac OX 快捷键速查表</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[MapReduce经典问题和Spark实现]]></title>
+        <id>https://Bradley-dufe.github.io/post/2019-04-21-Classic-MapReduce-Problem-With-Spark</id>
+        <link href="https://Bradley-dufe.github.io/post/2019-04-21-Classic-MapReduce-Problem-With-Spark">
+        </link>
+        <updated>2019-04-21T15:07:19.000Z</updated>
+        <summary type="html"><![CDATA[<h1 id="mapreduce经典问题和spark实现">MapReduce经典问题和Spark实现</h1>
+<p>MapReduce计算范式是当今的分布式计算算法实现的基础，也是算法工程师需要掌握的知识，同时“面试造火箭“的常见问题。本文梳理了MapReduce常见的算法场景,并通过Spark进行实现</p>
+]]></summary>
+        <content type="html"><![CDATA[<h1 id="mapreduce经典问题和spark实现">MapReduce经典问题和Spark实现</h1>
+<p>MapReduce计算范式是当今的分布式计算算法实现的基础，也是算法工程师需要掌握的知识，同时“面试造火箭“的常见问题。本文梳理了MapReduce常见的算法场景,并通过Spark进行实现</p>
 ]]></content>
     </entry>
     <entry>
@@ -81,26 +94,5 @@
         <link href="https://Bradley-dufe.github.io/post/2019-03-19-JavaBase">
         </link>
         <updated>2019-03-18T16:10:18.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[LeetCode At Hand (4-sum)]]></title>
-        <id>https://Bradley-dufe.github.io/post/2019-03-11-LeetCodeAtHand-4sum</id>
-        <link href="https://Bradley-dufe.github.io/post/2019-03-11-LeetCodeAtHand-4sum">
-        </link>
-        <updated>2019-03-10T16:09:15.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[LeetCode At Hand (k-sum)]]></title>
-        <id>https://Bradley-dufe.github.io/post/2019-03-11-LeetCodeAtHand-ksum</id>
-        <link href="https://Bradley-dufe.github.io/post/2019-03-11-LeetCodeAtHand-ksum">
-        </link>
-        <updated>2019-03-10T16:07:29.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[LeetCode At Hand (3sum-closest)]]></title>
-        <id>https://Bradley-dufe.github.io/post/2019-03-04-LeetCodeAtHand-3sum-closest</id>
-        <link href="https://Bradley-dufe.github.io/post/2019-03-04-LeetCodeAtHand-3sum-closest">
-        </link>
-        <updated>2019-03-04T09:35:25.000Z</updated>
     </entry>
 </feed>
