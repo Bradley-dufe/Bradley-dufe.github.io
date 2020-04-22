@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://Bradley-dufe.github.io</id>
+    <id>https://bradley-db.github.io</id>
     <title>闪光的沙粒</title>
-    <updated>2020-04-01T15:21:12.649Z</updated>
+    <updated>2020-04-22T15:15:13.160Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://Bradley-dufe.github.io"/>
-    <link rel="self" href="https://Bradley-dufe.github.io/atom.xml"/>
+    <link rel="alternate" href="https://bradley-db.github.io"/>
+    <link rel="self" href="https://bradley-db.github.io/atom.xml"/>
     <subtitle>温故而知新</subtitle>
-    <logo>https://Bradley-dufe.github.io/images/avatar.png</logo>
-    <icon>https://Bradley-dufe.github.io/favicon.ico</icon>
+    <logo>https://bradley-db.github.io/images/avatar.png</logo>
+    <icon>https://bradley-db.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 闪光的沙粒</rights>
     <entry>
         <title type="html"><![CDATA[ Jupyter Notebook on Mac快捷键整理]]></title>
-        <id>https://Bradley-dufe.github.io/post/2019-05-01-Jupyter-Tips</id>
-        <link href="https://Bradley-dufe.github.io/post/2019-05-01-Jupyter-Tips">
+        <id>https://bradley-db.github.io/post/2019-05-01-Jupyter-Tips</id>
+        <link href="https://bradley-db.github.io/post/2019-05-01-Jupyter-Tips">
         </link>
         <updated>2019-05-01T08:01:30.000Z</updated>
         <summary type="html"><![CDATA[<blockquote>
@@ -29,8 +29,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[Mac 快捷键整理]]></title>
-        <id>https://Bradley-dufe.github.io/post/2019-05-01-Mac-ShotCuts</id>
-        <link href="https://Bradley-dufe.github.io/post/2019-05-01-Mac-ShotCuts">
+        <id>https://bradley-db.github.io/post/2019-05-01-Mac-ShotCuts</id>
+        <link href="https://bradley-db.github.io/post/2019-05-01-Mac-ShotCuts">
         </link>
         <updated>2019-05-01T07:51:07.000Z</updated>
         <summary type="html"><![CDATA[<p>Mac OX 快捷键速查表</p>
@@ -40,8 +40,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[MapReduce经典问题和Spark实现]]></title>
-        <id>https://Bradley-dufe.github.io/post/2019-04-21-Classic-MapReduce-Problem-With-Spark</id>
-        <link href="https://Bradley-dufe.github.io/post/2019-04-21-Classic-MapReduce-Problem-With-Spark">
+        <id>https://bradley-db.github.io/post/2019-04-21-Classic-MapReduce-Problem-With-Spark</id>
+        <link href="https://bradley-db.github.io/post/2019-04-21-Classic-MapReduce-Problem-With-Spark">
         </link>
         <updated>2019-04-21T15:07:19.000Z</updated>
         <summary type="html"><![CDATA[<h1 id="mapreduce经典问题和spark实现">MapReduce经典问题和Spark实现</h1>
@@ -53,8 +53,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[认知学习：如何转变职业生涯]]></title>
-        <id>https://Bradley-dufe.github.io/post/2019-03-25-cognitive-study</id>
-        <link href="https://Bradley-dufe.github.io/post/2019-03-25-cognitive-study">
+        <id>https://bradley-db.github.io/post/2019-03-25-cognitive-study</id>
+        <link href="https://bradley-db.github.io/post/2019-03-25-cognitive-study">
         </link>
         <updated>2019-03-25T11:55:58.000Z</updated>
         <summary type="html"><![CDATA[<p>在我读到这篇文章之前，从来没有人能从心理学的角度来讨论职业生涯，特别是是谈论<strong>职业生涯转变</strong>这一关键问题。或许你也和我一样，正面临职业生涯困惑，通过这篇文章的学习掌握职业生涯转变的重要方法并贯彻执行，直到转型成功。</p>
@@ -64,8 +64,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[推荐系统：FM-模型]]></title>
-        <id>https://Bradley-dufe.github.io/post/2019-03-25-RecSys-FM</id>
-        <link href="https://Bradley-dufe.github.io/post/2019-03-25-RecSys-FM">
+        <id>https://bradley-db.github.io/post/2019-03-25-RecSys-FM</id>
+        <link href="https://bradley-db.github.io/post/2019-03-25-RecSys-FM">
         </link>
         <updated>2019-03-25T09:56:05.000Z</updated>
         <summary type="html"><![CDATA[<blockquote>
@@ -79,8 +79,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[机器学习基石-第一周(The Learning Problem)]]></title>
-        <id>https://Bradley-dufe.github.io/post/2019-03-25-ML-foundation-week-one</id>
-        <link href="https://Bradley-dufe.github.io/post/2019-03-25-ML-foundation-week-one">
+        <id>https://bradley-db.github.io/post/2019-03-25-ML-foundation-week-one</id>
+        <link href="https://bradley-db.github.io/post/2019-03-25-ML-foundation-week-one">
         </link>
         <updated>2019-03-25T09:45:59.000Z</updated>
         <summary type="html"><![CDATA[<p>機器學習基石 (Machine Learning Foundations)---Mathematical Foundations学习笔记，温故而知新。笔记中会掺杂自我思考的内容，如有理解的谬误之处，有则改之无则加勉。</p>
@@ -90,8 +90,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[JAVA基础知识]]></title>
-        <id>https://Bradley-dufe.github.io/post/2019-03-19-JavaBase</id>
-        <link href="https://Bradley-dufe.github.io/post/2019-03-19-JavaBase">
+        <id>https://bradley-db.github.io/post/2019-03-19-JavaBase</id>
+        <link href="https://bradley-db.github.io/post/2019-03-19-JavaBase">
         </link>
         <updated>2019-03-18T16:10:18.000Z</updated>
     </entry>
